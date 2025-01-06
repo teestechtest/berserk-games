@@ -359,7 +359,7 @@
       document.getElementById("message").style.display = "none";
       document.getElementById("card").classList.add("hidden");
       const spinAngle = Math.random() * 360 + 1440;
-      const spinDuration = 3000;
+      const spinDuration = 1800;
       const startTime = Date.now();
 
       const sections = getSections();
@@ -398,7 +398,7 @@
       setTimeout(() => {
         message.style.display = "none";
         showCard(player);
-      }, 3000);
+      }, 1800);
     }
 
     function showCard(player) {
@@ -411,7 +411,7 @@
 
     function done() {
       document.getElementById("card").classList.add("hidden");
-      if (spinCount >= 5) {
+      if (spinCount >= 2) {
         showPopup(); // Show the payment popup after the 5th card
       } else {
         document.getElementById("gamePage").classList.remove("hidden");
