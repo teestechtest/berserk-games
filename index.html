@@ -8,18 +8,31 @@
     body {
       font-family: Arial, sans-serif;
       text-align: center;
-      background-color: #1c1c1c;
+      background-color: #000000;
       color: white;
       margin: 0;
       padding: 0;
     }
 
     h1 {
-      font-size: 2.5em;
+      font-size: 3.5em;
       margin-top: 20px;
+      margin-bottom: 1px;
+    }
+    
+    h3 {
+       margin-top: 2; 
     }
 
     input, button {
+      padding: 10px;
+      margin: 10px;
+      font-size: 16px;
+      border: none;
+      border-radius: 5px;
+    }
+    
+    input, button1 {
       padding: 10px;
       margin: 10px;
       font-size: 16px;
@@ -32,7 +45,7 @@
     }
 
     button {
-      background-color: #ff4757;
+      background-color: #f3b13a;
       color: white;
       cursor: pointer;
       transition: background-color 0.3s ease;
@@ -41,6 +54,15 @@
     button:hover {
       background-color: #e84118;
     }
+    
+     button1 {
+      background-color: #000000;
+      margin: 30px
+      color: white;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
 
     canvas {
       margin-top: 20px;
@@ -60,14 +82,24 @@
       transform: translateY(-50%);
     }
 
-    #playButton, #spinButton, #doneButton, #backButton {
+    #playButton, #spinButton, #backButton {
       margin-top: 20px;
       padding: 15px 30px;
       font-size: 18px;
-      background-color: #3742fa;
-      color: white;
+      background-color: #ffffff;
+      color: black;
       cursor: pointer;
     }
+    
+     #doneButton {
+       margin-top: 20px;
+      padding: 15px 30px;
+      font-size: 18px;
+      background-color: #000000;
+      color: white;
+      cursor: pointer;
+     
+     }
 
     #playButton:hover, #spinButton:hover, #doneButton:hover, #backButton:hover {
       background-color: #2f3640;
@@ -139,6 +171,7 @@
       box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
       text-align: center;
       z-index: 1000;
+      
     }
 
     #popup button {
@@ -165,30 +198,47 @@
       background: rgba(0, 0, 0, 0.5);
       z-index: 999;
     }
+.player-list {
+  display: flex;
+  flex-direction: column;    /* Stack players vertically */
+  align-items: center;       /* Center the list horizontally */
+}
 
-    .name-buttons {
-      display: inline-block;
-      margin-left: 10px;
-    }
+.player-list div {
+  display: flex;             /* Align name and emojis horizontally */
+  justify-content: center;   /* Center the items in the row */
+  align-items: center;       /* Align name and emojis vertically */
+  margin-bottom: 10px;       /* Space between each player */
+  font-size: 18px;           /* Font size for names */
+}
 
-    .name-buttons button {
-      font-size: 12px;
-      padding: 5px 10px;
-      background-color: #ffa502;
-      color: white;
-      border: none;
-      border-radius: 3px;
-      cursor: pointer;
-    }
+.name-buttons {
+  display: flex;             /* Align the buttons horizontally */
+  gap: 10px;                 /* Space between the two buttons */
+  margin-left: 10px;         /* Space between the name and the buttons */
+}
 
-    .name-buttons button:hover {
-      background-color: #e84118;
-    }
+.name-buttons button {
+  font-size: 18px;           /* Adjust emoji size */
+  padding: 5px 10px;
+  background-color: #000000;
+  color: white;
+  border: none;
+  border-radius: 3px;
+  cursor: pointer;
+}
+
+.name-buttons button:hover {
+  background-color: #e84118;
+}
+
+
+
   </style>
 </head>
 <body>
   <div id="setupPage">
-    <h1>Party Spinner</h1>
+    <h1>Tipsy Spinner</h1> 
     <p>Enter player names and click "Play" to start the spinner!</p>
     <input type="text" id="nameInput" placeholder="Enter a name">
     <button onclick="addName()">Add Name</button>
@@ -198,7 +248,7 @@
   </div>
 
   <div id="gamePage" class="hidden">
-    <h1>Party Spinner</h1>
+    <h1>Tipsy Spinner</h1>
     <div id="message"></div> <!-- The message will pop up here -->
     <div class="container">
       <div id="spinnerContainer">
@@ -258,31 +308,42 @@
       document.getElementById("playButton").classList.add("hidden");
     }
 
-    function updateNameList() {
-      const nameList = document.getElementById("playerList");
-      nameList.innerHTML = "";
+ function updateNameList() {
+    const nameList = document.getElementById("playerList");
+    nameList.innerHTML = ""; // Clear the list before updating
 
-      names.forEach((name, index) => {
+    names.forEach((name, index) => {
         const listItem = document.createElement("div");
-        listItem.textContent = `${index + 1}. ${name}`;
+        
+        // Create a span for the name text
+        const nameSpan = document.createElement("span");
+        nameSpan.textContent = name;
+        listItem.appendChild(nameSpan);
 
         const buttonsDiv = document.createElement("div");
         buttonsDiv.className = "name-buttons";
 
+        // Create the emoji buttons
         const editButton = document.createElement("button");
-        editButton.textContent = "Edit";
+        editButton.textContent = "🖊️";
         editButton.onclick = () => editName(index);
 
         const removeButton = document.createElement("button");
-        removeButton.textContent = "Remove";
+        removeButton.textContent = "❌";
         removeButton.onclick = () => removeName(index);
 
+        // Append the buttons to the buttons container
         buttonsDiv.appendChild(editButton);
         buttonsDiv.appendChild(removeButton);
+
+        // Append buttons div to list item
         listItem.appendChild(buttonsDiv);
+        
+        // Append list item to name list
         nameList.appendChild(listItem);
-      });
-    }
+    });
+}
+
 
     function editName(index) {
       const newName = prompt("Edit name:", names[index]);
@@ -314,34 +375,93 @@
       drawSpinner();
     }
 
-    function drawSpinner() {
-      const colors = ["#FF6B6B", "#FFD93D", "#6BCB77", "#4D96FF", "#FF6F91", "#845EC2"];
-      const sections = getSections();
-      const sectionCount = sections.length;
-      const anglePerSection = (2 * Math.PI) / sectionCount;
+function drawSpinner() {
+  const colors = ["#FF7518", "#FF4B18", "#FF9E18", "#FF3A18", "#FF6A18", "#FFB318"];
+  const sections = getSections();  // Get sections (names)
+  const sectionCount = sections.length;
+  const anglePerSection = (2 * Math.PI) / sectionCount;
 
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
+  ctx.clearRect(0, 0, canvas.width, canvas.height); // Clear the canvas before drawing
 
-      for (let i = 0; i < sectionCount; i++) {
-        const angleStart = i * anglePerSection;
-        const angleEnd = (i + 1) * anglePerSection;
+  // Draw the spinner sections
+  for (let i = 0; i < sectionCount; i++) {
+    const angleStart = i * anglePerSection;
+    const angleEnd = (i + 1) * anglePerSection;
 
-        ctx.beginPath();
-        ctx.moveTo(canvas.width / 2, canvas.height / 2);
-        ctx.arc(canvas.width / 2, canvas.height / 2, canvas.width / 2, angleStart, angleEnd);
-        ctx.fillStyle = colors[i % colors.length];
-        ctx.fill();
+    ctx.beginPath();
+    ctx.moveTo(canvas.width / 2, canvas.height / 2);  // Move to center of the canvas
+    ctx.arc(canvas.width / 2, canvas.height / 2, canvas.width / 2, angleStart, angleEnd);  // Draw arc for section
+    ctx.fillStyle = colors[i % colors.length];  // Fill color from colors array
+    ctx.fill();
+  }
 
-        ctx.save();
-        ctx.translate(canvas.width / 2, canvas.height / 2);
-        ctx.rotate(angleStart + anglePerSection / 2);
-        ctx.textAlign = "center";
-        ctx.fillStyle = "white";
-        ctx.font = "14px Arial";
-        ctx.fillText(sections[i], canvas.width / 4, 10);
-        ctx.restore();
-      }
-    }
+  // Add a thick red border to the circumference of the spinner
+  ctx.lineWidth = 15;  // Set thickness of the border
+  ctx.strokeStyle = "#FF0000";  // Set border color to red
+  ctx.beginPath();
+  ctx.arc(canvas.width / 2, canvas.height / 2, canvas.width / 2, 0, Math.PI * 2);  // Draw the full circle
+  ctx.stroke();  // Apply the border
+
+  // Draw text (names) inside the spinner sections
+  ctx.fillStyle = "white"; // Set text color to white (or another contrasting color)
+  ctx.font = "14px Arial"; // Set the font size and type
+  ctx.textAlign = "center";  // Center the text horizontally
+
+  for (let i = 0; i < sectionCount; i++) {
+    const angleStart = i * anglePerSection;
+    const angleEnd = (i + 1) * anglePerSection;
+
+    // Save current context
+    ctx.save();
+
+    // Move to the center of the canvas and rotate
+    ctx.translate(canvas.width / 2, canvas.height / 2);
+    ctx.rotate(angleStart + anglePerSection / 2);  // Rotate to the middle of the section
+
+    // Draw the name text in each section
+    ctx.fillText(sections[i], canvas.width / 4, 10);  // Adjust x and y values for positioning
+
+    // Restore context to the original state
+    ctx.restore();
+  }
+
+  // Draw the small circle and point in the center of the spinner
+  drawCenterCircleWithPoint();
+}
+
+// Function to draw a small circle with a point extending from it at the center of the spinner
+function drawCenterCircleWithPoint() {
+  const circleRadius = 16; // Radius of the small circle
+  const pointLength = 15;  // Length of the point (smaller to reduce space)
+
+  // Draw the circle in the center
+  ctx.beginPath();
+  ctx.arc(canvas.width / 2, canvas.height / 2, circleRadius, 0, Math.PI * 2);  // Draw circle at the center of the spinner
+  ctx.fillStyle = "white"; // Set circle color to white (or any other color you prefer)
+  ctx.fill();  // Fill the circle
+
+  // Calculate the rotation angle for the point based on the spinner's current position
+  const angle = getSpinnerRotationAngle();  // Get the current rotation angle of the spinner
+
+ 
+}
+
+// Function to get the current rotation angle of the spinner
+function getSpinnerRotationAngle() {
+  const spinCount = 0; // Set this to the current spin angle or state
+  const spinAngle = Math.random() * 360 + 1440; // Placeholder for spin angle (replace this with actual angle tracking)
+  return spinAngle * Math.PI / 180;  // Convert to radians
+}
+
+
+// Function to get the current rotation angle of the spinner
+function getSpinnerRotationAngle() {
+  const spinCount = 0; // Set this to the current spin angle or state
+  const spinAngle = Math.random() * 360 + 1440; // Placeholder for spin angle (replace this with actual angle tracking)
+  return spinAngle * Math.PI / 180;  // Convert to radians
+}
+
+
 
     function getSections() {
       const sections = names.length < 8 ? [...names, ...names] : [...names];
