@@ -55,6 +55,7 @@
       background-color: #e84118;
     }
     
+    
      button1 {
       background-color: #000000;
       margin: 30px
@@ -64,23 +65,41 @@
     }
 
 
-    canvas {
-      margin-top: 20px;
-      background: white;
-      border-radius: 50%;
-    }
+  canvas {
+  margin-top: 20px;
+  background: white;
+  border-radius: 50%;
+  width: 80vw;  /* Spinner width is 80% of the viewport width */
+  height: 80vw; /* Spinner height is 80% of the viewport width */
+  max-width: 500px; /* Set a max width for the spinner */
+  max-height: 500px; /* Set a max height for the spinner */
+}
 
-    #arrow {
-      position: absolute;
-      width: 0;
-      height: 0;
-      border-top: 20px solid transparent;
-      border-bottom: 20px solid transparent;
-      border-right: 30px solid red;
-      top: 50%;
-      left: calc(50% + 220px);
-      transform: translateY(-50%);
-    }
+  #arrow {
+  position: absolute;
+  width: 0;
+  height: 0;
+  border-top: 20px solid transparent;
+  border-bottom: 20px solid transparent;
+  border-right: 30px solid red;
+  top: 50%; /* Vertically center the arrow */
+  left: 90%; /* Position the arrow completely to the right of the spinner */
+  transform: translateY(-50%); /* Adjust to keep the arrow vertically centered */
+}
+
+/* Media query for mobile screen sizes */
+@media (max-width: 768px) {
+  #arrow {
+    border-top: 15px solid transparent; /* Smaller arrow size */
+    border-bottom: 15px solid transparent; /* Smaller arrow size */
+    border-right: 25px solid red; /* Smaller arrow size */
+    margin-left: 10px;
+    position: absolute;
+    bottom: 10px; /* Move the arrow down 10px from the bottom of the spinner */
+    left: 90%; /* Center horizontally */
+    transform: translateY(-50%); /* Adjust the position to make sure it's centered */
+  }
+}
 
     #playButton, #spinButton, #backButton {
       margin-top: 20px;
@@ -118,31 +137,32 @@
       position: relative;
     }
 
-    #message {
-      margin-top: 10px;
-      margin-bottom: 20px;
-      font-size: 2em;
-      color: yellow;
-      font-weight: bold;
-      display: none; /* Initially hidden */
-    }
+  #card {
+  display: none;
+  background-color: white;
+  color: black;
+  width: 80%; /* Card width is 80% of the viewport width */
+  max-width: 500px; /* Set a max width for the card */
+  height: auto; /* Let the height adjust based on content */
+  margin: 50px auto;
+  border-radius: 15px;
+  padding: 20px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+  font-size: 18px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
 
-    #card {
-      display: none;
-      background-color: white;
-      color: black;
-      width: 300px;
-      height: 400px;
-      margin: 50px auto;
-      border-radius: 15px;
-      padding: 20px;
-      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
-      font-size: 18px;
-      text-align: center;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-    }
+#message {
+  margin-top: 10px;
+  margin-bottom: 20px;
+  font-size: 2em;
+  color: yellow;
+  font-weight: bold;
+  display: none;
+}
 
     #card h2 {
       margin-bottom: 30px;
@@ -374,6 +394,7 @@
       document.getElementById("gamePage").classList.remove("hidden");
       drawSpinner();
     }
+    
 
 function drawSpinner() {
   const colors = ["#FF7518", "#FF4B18", "#FF9E18", "#FF3A18", "#FF6A18", "#FFB318"];
@@ -429,22 +450,39 @@ function drawSpinner() {
   drawCenterCircleWithPoint();
 }
 
-// Function to draw a small circle with a point extending from it at the center of the spinner
 function drawCenterCircleWithPoint() {
-  const circleRadius = 16; // Radius of the small circle
-  const pointLength = 15;  // Length of the point (smaller to reduce space)
+  // Make the circle and point sizes relative to the canvas size
+  const circleRadius = canvas.width * 0.05; // Circle radius is 5% of the canvas width
+  const pointLength = canvas.width * 0.00;  // Point length is 7% of the canvas width
 
   // Draw the circle in the center
   ctx.beginPath();
   ctx.arc(canvas.width / 2, canvas.height / 2, circleRadius, 0, Math.PI * 2);  // Draw circle at the center of the spinner
-  ctx.fillStyle = "white"; // Set circle color to white (or any other color you prefer)
+  ctx.fillStyle = "white"; // Set circle color to white
   ctx.fill();  // Fill the circle
 
   // Calculate the rotation angle for the point based on the spinner's current position
   const angle = getSpinnerRotationAngle();  // Get the current rotation angle of the spinner
-
- 
+  ctx.beginPath();
+  ctx.moveTo(canvas.width / 2, canvas.height / 2);
+  ctx.lineTo(canvas.width / 2, canvas.height / 2 - pointLength);  // Draw the point extending upward
+  ctx.strokeStyle = "white"; // Set the color of the point
+  ctx.lineWidth = 3;  // Set point thickness
+  ctx.stroke();
 }
+
+
+// Function to resize the canvas and redraw the spinner when the window resizes
+window.addEventListener('resize', resizeCanvas);
+
+function resizeCanvas() {
+  const size = Math.min(window.innerWidth, window.innerHeight) * 0.6; // 60% of the viewport size
+  canvas.width = size;
+  canvas.height = size;
+  drawSpinner(); // Redraw spinner to match new size
+}
+
+resizeCanvas(); // Initialize on page load
 
 // Function to get the current rotation angle of the spinner
 function getSpinnerRotationAngle() {
@@ -558,10 +596,14 @@ function getSpinnerRotationAngle() {
       document.getElementById("popup").style.display = "block";
     }
 
-    function handlePay() {
-      alert("Redirecting to payment gateway...");
-      // Add payment logic here
-    }
+   function handlePay() {
+  alert("Redirecting to payment gateway...");
+  
+  // Redirect after 2 seconds
+  setTimeout(function() {
+    window.location.href = "https://www.berserk-games.co.uk/product-page/coming-soon";  // desired URL
+  }, 2000);  // 2000 milliseconds = 2 seconds
+}
   </script>
 </body>
 </html>
