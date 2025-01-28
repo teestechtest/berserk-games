@@ -426,6 +426,11 @@ function drawSpinner() {
   const isMobile = window.innerWidth <= 768;
   const fontSize = isMobile ? "6px" : "14px";  // Smaller font for mobile
 
+    // Set the font size dynamically based on screen size
+  ctx.fillStyle = "white"; // Set text color to white (or another contrasting color)
+  ctx.font = `${fontSize} Arial`; // Set font size dynamically based on screen size
+  ctx.textAlign = "center";  // Center the text horizontally
+
   // Draw the spinner sections
   for (let i = 0; i < sectionCount; i++) {
     const angleStart = i * anglePerSection;
