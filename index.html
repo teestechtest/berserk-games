@@ -128,6 +128,8 @@
       position: relative;
       display: inline-block;
     }
+    
+    
 
     .container {
       display: flex;
@@ -298,11 +300,27 @@
   <script>
     const names = [];
     const questionBank = [
-      "Take 2 sips and name your favorite drink.",
-      "Name someone in the group you'd like to swap lives with for a day. If you refuse, drink 3 sips.",
-      "Tell the group a secret you've never shared before or drink 4 sips.",
-      "Imitate someone in the group. If no one guesses correctly, drink 2 sips.",
-      "Give out 5 sips to anyone you choose."
+    "Let someone in the group ask you a personal question. If you don’t answer, drink 4 sips.",
+    "Give 3 sips to the best looking player in the room.",
+      "Take 2 sips and give your best pick-up line to the person on your left.",
+"Name the most embarrassing thing you've ever done while drunk, or drink 3 sips.",
+"If you could kiss anyone in the room right now, who would it be? If you don't answer, drink 4 sips.",
+"Do your best impression of a celebrity and have everyone guess. If they guess wrong, drink 3 sips.",
+"Take 2 sips and show everyone your best dance move.",
+"Let the person to your right text anyone in your phone. If they refuse, drink 5 sips.",
+"Take 3 sips and say something you've never told anyone before.",
+"Give 2 sips to the person who has the most ‘interesting’ fashion choice tonight.",
+"Take 1 sip if you’ve ever had a crush on someone in this room, 2 if they know about it.",
+"Imitate a famous movie scene and have everyone guess. If no one guesses right, take 3 sips.",
+"Take 3 sips and reveal the worst date you’ve ever been on.",
+"Do a dramatic reading of your last text message. If you refuse, drink 2 sips.",
+"Take 2 sips and name something you'd never do for love.",
+"Everyone else picks a person you have to take a drink with, or drink 2 sips alone.",
+"Pick someone in the group to give a compliment to. If you don't, drink 3 sips.",
+"Do your best sexy walk across the room. If no one applauds, drink 3 sips.",
+"Tell the group a secret about yourself or drink 5 sips.",
+"Take 2 sips and make a toast to the funniest person in the room."
+
     ];
     const canvas = document.getElementById("spinner");
     const ctx = canvas.getContext("2d");
@@ -398,11 +416,15 @@
 
 function drawSpinner() {
   const colors = ["#FF7518", "#FF4B18", "#FF9E18", "#FF3A18", "#FF6A18", "#FFB318"];
-  const sections = getSections();  // Get sections (names)
+  const sections = getSections();
   const sectionCount = sections.length;
   const anglePerSection = (2 * Math.PI) / sectionCount;
 
-  ctx.clearRect(0, 0, canvas.width, canvas.height); // Clear the canvas before drawing
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+  // Check if it's a mobile device (screen width < 768px)
+  const isMobile = window.innerWidth <= 768;
+  const fontSize = isMobile ? "10px" : "14px";  // Smaller font for mobile
 
   // Draw the spinner sections
   for (let i = 0; i < sectionCount; i++) {
@@ -410,45 +432,32 @@ function drawSpinner() {
     const angleEnd = (i + 1) * anglePerSection;
 
     ctx.beginPath();
-    ctx.moveTo(canvas.width / 2, canvas.height / 2);  // Move to center of the canvas
-    ctx.arc(canvas.width / 2, canvas.height / 2, canvas.width / 2, angleStart, angleEnd);  // Draw arc for section
-    ctx.fillStyle = colors[i % colors.length];  // Fill color from colors array
+    ctx.moveTo(canvas.width / 2, canvas.height / 2);
+    ctx.arc(canvas.width / 2, canvas.height / 2, canvas.width / 2, angleStart, angleEnd);
+    ctx.fillStyle = colors[i % colors.length];
     ctx.fill();
   }
 
-  // Add a thick red border to the circumference of the spinner
-  ctx.lineWidth = 15;  // Set thickness of the border
-  ctx.strokeStyle = "#FF0000";  // Set border color to red
-  ctx.beginPath();
-  ctx.arc(canvas.width / 2, canvas.height / 2, canvas.width / 2, 0, Math.PI * 2);  // Draw the full circle
-  ctx.stroke();  // Apply the border
-
-  // Draw text (names) inside the spinner sections
-  ctx.fillStyle = "white"; // Set text color to white (or another contrasting color)
-  ctx.font = "14px Arial"; // Set the font size and type
-  ctx.textAlign = "center";  // Center the text horizontally
+  // Draw the names inside the spinner sections
+  ctx.fillStyle = "white";
+  ctx.font = `${fontSize} Arial`;  // Set font size dynamically based on screen size
+  ctx.textAlign = "center";
 
   for (let i = 0; i < sectionCount; i++) {
     const angleStart = i * anglePerSection;
     const angleEnd = (i + 1) * anglePerSection;
 
-    // Save current context
     ctx.save();
-
-    // Move to the center of the canvas and rotate
     ctx.translate(canvas.width / 2, canvas.height / 2);
-    ctx.rotate(angleStart + anglePerSection / 2);  // Rotate to the middle of the section
-
-    // Draw the name text in each section
-    ctx.fillText(sections[i], canvas.width / 4, 10);  // Adjust x and y values for positioning
-
-    // Restore context to the original state
+    ctx.rotate(angleStart + anglePerSection / 2);
+    ctx.fillText(sections[i], canvas.width / 4, 10);
     ctx.restore();
   }
 
   // Draw the small circle and point in the center of the spinner
   drawCenterCircleWithPoint();
 }
+
 
 function drawCenterCircleWithPoint() {
   // Make the circle and point sizes relative to the canvas size
@@ -569,8 +578,8 @@ function getSpinnerRotationAngle() {
 
     function done() {
       document.getElementById("card").classList.add("hidden");
-      if (spinCount >= 2) {
-        showPopup(); // Show the payment popup after the 5th card
+      if (spinCount >= 20) {
+        showPopup(); // Show the payment popup after the 20th card
       } else {
         document.getElementById("gamePage").classList.remove("hidden");
       }
