@@ -29,7 +29,13 @@ img {
   max-width: 400px; /* Limits image size */
 }
 
- 
+    /* Mobile Fix: Ensure Image Resizes */
+@media (max-width: 768px) {
+  img {
+      max-width: 100vw; /* Allows image to scale properly */
+  }
+}
+
 
 
     input, button {
