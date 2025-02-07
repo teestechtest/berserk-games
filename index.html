@@ -37,7 +37,17 @@ img {
   }
 }
 
+p {
+  margin: 20px auto; /* Default margin for desktop */
+  text-align: center; /* Keep text centered */
+}
 
+/* Mobile-specific margin */
+@media (max-width: 768px) {
+  p {
+    margin: 10px 5px; /* Reduce margin only on mobile */
+  }
+}
 
     input, button {
       padding: 10px;
