@@ -29,10 +29,11 @@ img {
   max-width: 400px; /* Limits image size */
 }
 
-/* Resize image ONLY on mobile (screens smaller than 768px) */
+
+/* Mobile Fix: Ensure Image Resizes */
 @media (max-width: 768px) {
   img {
-    max-width: 100px; /* Smaller width for mobile */
+    max-width: 80vw; /* Makes sure image scales properly */
   }
 }
     input, button {
