@@ -29,10 +29,11 @@ img {
   max-width: 400px; /* Limits image size */
 }
 
-    /* Mobile Fix: Ensure Image Resizes */
+/* Make the image bigger on mobile */
 @media (max-width: 768px) {
   img {
-      max-width: 100vw; /* Allows image to scale properly */
+    max-width: 95vw; /* Keeps it large on mobile */
+    min-width: 300px; /* Prevents shrinking too much */
   }
 }
 
