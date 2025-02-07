@@ -23,7 +23,18 @@
     h3 {
        margin-top: 2; 
     }
+    
+img {
+  width: 100%; /* Default full width */
+  max-width: 500px; /* Limits image size */
+}
 
+/* Resize image ONLY on mobile (screens smaller than 768px) */
+@media (max-width: 768px) {
+  img {
+    max-width: 300px; /* Smaller width for mobile */
+  }
+}
     input, button {
       padding: 10px;
       margin: 10px;
