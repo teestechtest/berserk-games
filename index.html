@@ -29,11 +29,10 @@ img {
   max-width: 400px; /* Limits image size */
 }
 
-/* Make the image bigger on mobile */
+/* Adjust image size ONLY on mobile screens (max-width: 768px) */
 @media (max-width: 768px) {
   img {
-    max-width: 95vw; /* Keeps it large on mobile */
-    min-width: 300px; /* Prevents shrinking too much */
+    max-width: 250px; /* Reduce the size of the image on mobile */
   }
 }
 
@@ -313,36 +312,117 @@ img {
   <div id="overlay"></div>
   <div id="popup">
     <h2>Want more questions?</h2>
-    <p>Unlock for £2.99 here</p>
-    <button onclick="handlePay()">Pay</button>
+  
+    <button onclick="handlePay()">Shop</button>
     <button onclick="restartGame()">Restart</button>
   </div>
 
   <script>
     const names = [];
     const questionBank = [
-    "Let someone in the group ask you a personal question. If you don’t answer, drink 4 sips.",
-    "Give 3 sips to the best looking player in the room.",
-      "Take 2 sips and give your best pick-up line to the person on your left.",
-"Name the most embarrassing thing you've ever done while drunk, or drink 3 sips.",
-"If you could kiss anyone in the room right now, who would it be? If you don't answer, drink 4 sips.",
-"Do your best impression of a celebrity and have everyone guess. If they guess wrong, drink 3 sips.",
-"Take 2 sips and show everyone your best dance move.",
-"Let the person to your right text anyone in your phone. If they refuse, drink 5 sips.",
-"Take 3 sips and say something you've never told anyone before.",
-"Give 2 sips to the person who has the most ‘interesting’ fashion choice tonight.",
-"Take 1 sip if you’ve ever had a crush on someone in this room, 2 if they know about it.",
-"Imitate a famous movie scene and have everyone guess. If no one guesses right, take 3 sips.",
-"Take 3 sips and reveal the worst date you’ve ever been on.",
-"Do a dramatic reading of your last text message. If you refuse, drink 2 sips.",
-"Take 2 sips and name something you'd never do for love.",
-"Everyone else picks a person you have to take a drink with, or drink 2 sips alone.",
-"Pick someone in the group to give a compliment to. If you don't, drink 3 sips.",
-"Do your best sexy walk across the room. If no one applauds, drink 3 sips.",
-"Tell the group a secret about yourself or drink 5 sips.",
-"Take 2 sips and make a toast to the funniest person in the room."
+  "Most likely to get kicked out of a bar? Drink",
+  "Most likely to drunk-text their ex? Drink",
+  "Most likely to end up on reality TV? Drink",
+  "Most likely to marry for money? Drink",
+  "Most likely to forget their own birthday? Drink",
+  "Most likely to get arrested? Drink",
+  "Most likely to become famous? Drink",
+  "Most likely to hook up with a stranger tonight? Drink",
+  "Most likely to call their mom while drunk? Drink",
+  "Most likely to dance on a table? Drink",
+  "Text your crush, “I think we’d be cute together.” Or drink",
+  "Let the group go through your phone for 60 seconds or drink twice",
+  "Post “I love feet” on your social media story or drink three times",
+  "Send the fifth photo in your camera roll to the group chat or drink",
+  "Read out your last text message or drink",
+  "Let someone write something on your forehead with a marker or drink",
+  "Attempt a TikTok dance or drink",
+  "Call a random contact and ask for $5 or drink",
+  "Speak in a foreign accent for the next three rounds or drink",
+  "Swap shirts with the person next to you or drink",
+  "Never have I ever kissed more than one person in one night",
+  "Never have I ever gone skinny dipping",
+  "Never have I ever been on a dating app",
+  "Never have I ever ghosted someone",
+  "Never have I ever lied in this game",
+  "Never have I ever faked being drunk",
+  "Never have I ever hooked up with a coworker",
+  "Never have I ever been in handcuffs",
+  "Never have I ever thrown up from drinking",
+  "Never have I ever made a bet I immediately regretted",
+  "Would you rather drunk text your boss or your ex? Drink if you choose neither",
+  "Would you rather take a shot or let someone scroll through your DMs for 30 seconds",
+  "Would you rather lose your phone for a week or not drink for a month",
+  "Would you rather be famous for something embarrassing or completely unknown forever",
+  "Would you rather always have to speak in rhymes or sing everything you say",
+  "Would you rather get caught making out in public or send a risky text to the wrong person",
+  "Would you rather only be able to whisper or only be able to shout",
+  "Would you rather give up social media or alcohol for a year",
+  "Would you rather kiss someone random in the group or drink three times",
+  "Would you rather have to chug your drink or pour it on your head",
+  "For the next round, you must only speak in questions or drink",
+  "Every time someone swears, they take a drink",
+  "For the next three rounds, no one can say “drink” or they drink",
+  "If your name has an 'A' in it, take a drink",
+  "You must hold your drink with your non-dominant hand for the next round or drink twice",
+  "If you're wearing jeans, take a drink",
+  "If you’ve ever faked being sick to get out of work, drink",
+  "If you’ve been single for over a year, drink twice",
+  "If you’ve ever slid into someone’s DMs, drink",
+  "If you’ve ever used a fake ID, drink",
+  "Drink if you’ve ever thrown a drink at someone",
+  "Drink if you’ve ever been in a bar fight",
+  "Drink if you’ve ever blacked out",
+  "Drink if you’ve ever kissed someone in the room",
+  "Drink if you’ve ever had a one-night stand",
+  "Drink if you’ve ever lied about your age to get into a club",
+  "Drink if you’ve ever been caught sneaking out",
+  "Drink if you’ve ever stolen something",
+  "Drink if you’ve ever been dumped",
+  "Drink if you’ve ever ghosted someone",
+  "Stare into the eyes of the person on your left for 10 seconds or drink",
+  "The person with the loudest laugh drinks",
+  "The person with the most unread texts drinks",
+  "Take a drink if your phone battery is under 20%",
+  "Let the group pick a new name for you for the rest of the game or drink",
+  "Do an impression of someone in the group or drink",
+  "Do your best pick-up line on someone in the room or drink",
+  "Pretend to be a bartender and make a drink for someone else or take a shot",
+  "Show the last thing you Googled or drink",
+  "The last person to touch their nose drinks",
+  "Choose someone to have a staring contest with; loser drinks",
+  "The tallest person in the room takes a drink",
+  "If you're single, take a drink. If you're in a relationship, take two",
+  "If you’ve ever kissed the same gender, drink",
+  "Everyone with an iPhone takes a drink",
+  "Everyone wearing black takes a drink",
+  "Pair up with someone. If you both have the same shoe size, drink",
+  "Everyone who has been to a concert in the last year drinks",
+  "Everyone who has a tattoo takes a drink",
+  "Everyone in the room votes on who is most likely to marry first. That person drinks",
+  "Name three countries in five seconds or drink",
+  "Name three alcoholic drinks in five seconds or drink",
+  "Name three celebrities who are currently single or drink",
+  "Say the alphabet backwards in 10 seconds or drink",
+  "Count to 30 without anyone interrupting. If someone interrupts, they drink",
+  "If you can guess someone’s middle name in the group, they drink",
+  "If you can name the capital of Australia, everyone else drinks",
+  "If you have less than $10 in your bank account, drink",
+  "If you can guess what color underwear the person to your left is wearing, they drink",
+  "If you can balance a bottle on your head for 10 seconds, give out a drink",
+  "Have you ever cheated on someone",
+  "What's the most embarrassing thing you've ever done drunk",
+  "Have you ever been rejected in public",
+  "What’s your most embarrassing guilty pleasure",
+  "Who in this room would you most want to kiss",
+  "What’s the most embarrassing text you’ve ever sent",
+  "Have you ever been caught lying",
+  "What’s the worst date you’ve ever been on",
+  "What’s the biggest lie you’ve ever told",
+  "Have you ever hooked up with a friend’s ex"
+];
 
-    ];
+   
     const canvas = document.getElementById("spinner");
     const ctx = canvas.getContext("2d");
     let spinning = false;
@@ -443,9 +523,13 @@ function drawSpinner() {
 
   ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-  // Check if it's a mobile device (screen width < 768px)
-  const isMobile = window.innerWidth <= 768;
-  const fontSize = isMobile ? "10px" : "14px";  // Smaller font for mobile
+  // Draw the outer red border (part of the spinner)
+  ctx.beginPath();
+  ctx.arc(canvas.width / 2, canvas.height / 2, canvas.width / 2, 0, 2 * Math.PI);
+  ctx.lineWidth = 15; // Border thickness
+  ctx.strokeStyle = "red"; // Border color
+  ctx.stroke();
+  ctx.closePath();
 
   // Draw the spinner sections
   for (let i = 0; i < sectionCount; i++) {
@@ -454,19 +538,18 @@ function drawSpinner() {
 
     ctx.beginPath();
     ctx.moveTo(canvas.width / 2, canvas.height / 2);
-    ctx.arc(canvas.width / 2, canvas.height / 2, canvas.width / 2, angleStart, angleEnd);
+    ctx.arc(canvas.width / 2, canvas.height / 2, canvas.width / 2 - 10, angleStart, angleEnd);
     ctx.fillStyle = colors[i % colors.length];
     ctx.fill();
   }
 
   // Draw the names inside the spinner sections
   ctx.fillStyle = "white";
-  ctx.font = `${fontSize} Arial`;  // Set font size dynamically based on screen size
+  ctx.font = "14px Arial";
   ctx.textAlign = "center";
 
   for (let i = 0; i < sectionCount; i++) {
     const angleStart = i * anglePerSection;
-    const angleEnd = (i + 1) * anglePerSection;
 
     ctx.save();
     ctx.translate(canvas.width / 2, canvas.height / 2);
@@ -475,9 +558,10 @@ function drawSpinner() {
     ctx.restore();
   }
 
-  // Draw the small circle and point in the center of the spinner
+  // Draw the small center circle with pointer
   drawCenterCircleWithPoint();
 }
+
 
 
 function drawCenterCircleWithPoint() {
@@ -599,8 +683,8 @@ function getSpinnerRotationAngle() {
 
     function done() {
       document.getElementById("card").classList.add("hidden");
-      if (spinCount >= 5) {
-        showPopup(); // Show the payment popup after the 5th card
+      if (spinCount >= 100) {
+        showPopup(); // Show the payment popup after the 100th card
       } else {
         document.getElementById("gamePage").classList.remove("hidden");
       }
@@ -627,11 +711,11 @@ function getSpinnerRotationAngle() {
     }
 
    function handlePay() {
-  alert("Redirecting to payment gateway...");
+  alert("Redirecting...");
   
   // Redirect after 2 seconds
   setTimeout(function() {
-    window.location.href = "https://www.berserk-games.co.uk/product-page/coming-soon";  // desired URL
+    window.location.href = "https://www.berserk-games.co.uk/shop";  // desired URL
   }, 2000);  // 2000 milliseconds = 2 seconds
 }
   </script>
