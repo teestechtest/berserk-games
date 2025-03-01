@@ -410,16 +410,16 @@ img {
   "If you have less than $10 in your bank account, drink",
   "If you can guess what color underwear the person to your left is wearing, they drink",
   "If you can balance a bottle on your head for 10 seconds, give out a drink",
-  "Have you ever cheated on someone?",
+  "Have you ever cheated on someone",
   "What's the most embarrassing thing you've ever done drunk",
-  "Have you ever been rejected in public?",
-  "What’s your most embarrassing guilty pleasure?",
-  "Who in this room would you most want to kiss?",
-  "What’s the most embarrassing text you’ve ever sent?",
-  "Have you ever been caught lying?",
-  "What’s the worst date you’ve ever been on?",
-  "What’s the biggest lie you’ve ever told?",
-  "Have you ever hooked up with a friend’s ex?"
+  "Have you ever been rejected in public",
+  "What’s your most embarrassing guilty pleasure",
+  "Who in this room would you most want to kiss",
+  "What’s the most embarrassing text you’ve ever sent",
+  "Have you ever been caught lying",
+  "What’s the worst date you’ve ever been on",
+  "What’s the biggest lie you’ve ever told",
+  "Have you ever hooked up with a friend’s ex"
 ];
 
    
@@ -531,6 +531,10 @@ function drawSpinner() {
   ctx.stroke();
   ctx.closePath();
 
+  // Check if the screen is mobile size (< 768px) and adjust font size
+  const isMobile = window.innerWidth <= 768;
+  const fontSize = isMobile ? "10px" : "14px"; // Reduce font size on mobile
+
   // Draw the spinner sections
   for (let i = 0; i < sectionCount; i++) {
     const angleStart = i * anglePerSection;
@@ -545,7 +549,7 @@ function drawSpinner() {
 
   // Draw the names inside the spinner sections
   ctx.fillStyle = "white";
-  ctx.font = "14px Arial";
+  ctx.font = `${fontSize} Arial`; // Apply dynamic font size
   ctx.textAlign = "center";
 
   for (let i = 0; i < sectionCount; i++) {
