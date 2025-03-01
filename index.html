@@ -670,6 +670,7 @@ function getSpinnerRotationAngle() {
       const message = document.getElementById("message");
       message.innerText = `${player}, it's your turn!`;
       message.style.display = "block";
+      message.style.fontSize = "24px";  // Set desired size
 
       setTimeout(() => {
         message.style.display = "none";
