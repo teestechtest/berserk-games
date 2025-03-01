@@ -688,7 +688,7 @@ function getSpinnerRotationAngle() {
 
     function done() {
       document.getElementById("card").classList.add("hidden");
-      if (spinCount >= 1) {
+      if (spinCount >= 100) {
         showPopup(); // Show the payment popup after the 100th card
       } else {
         document.getElementById("gamePage").classList.remove("hidden");
